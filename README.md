@@ -2,6 +2,7 @@
 
 JouerFlux is an application for managing firewalls, policies, and firewall rules.
 
+[Click here for README](./jouerflux/README.md)
 ## Features
 
 - Manage firewalls (add, view, delete)
