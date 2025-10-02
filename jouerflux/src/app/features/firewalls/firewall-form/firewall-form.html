@@ -1,0 +1,19 @@
+<section class="container">
+  <h2>{{ isEdit() ? 'Modifier' : 'Créer' }} un Firewall</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+    <label>
+      Nom *
+      <input formControlName="name" />
+    </label>
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <div class="error">Nom requis (min 2).</div>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">
+        {{ isEdit() ? 'Enregistrer' : 'Créer' }}
+      </button>
+    </div>
+  </form>
+</section>

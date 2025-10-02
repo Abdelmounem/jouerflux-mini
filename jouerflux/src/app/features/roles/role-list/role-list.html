@@ -1,0 +1,113 @@
+<section class="container">
+  <header class="page-header">
+    <h2>Rôles</h2>
+    <button mat-raised-button color="primary" (click)="openCreate()">+ Nouveau</button>
+  </header>
+
+  <mat-form-field appearance="outline" class="w-100 mb-12">
+    <mat-label>Rechercher par nom…</mat-label>
+    <input matInput (input)="onSearch($any($event.target)?.value ?? '')" />
+  </mat-form-field>
+
+  <div *ngIf="loading()" class="muted">Chargement…</div>
+  <div *ngIf="error()" class="error">{{ error() }}</div>
+
+  <div class="mat-elevation-z2 table-wrap" *ngIf="filtered().length; else empty">
+    <table mat-table [dataSource]="filtered()" class="full-width compact-table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let r">{{ r.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="policy_id">
+        <th mat-header-cell *matHeaderCellDef>Policy ID</th>
+        <td mat-cell *matCellDef="let r">{{ r.policy_id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-header">Actions</th>
+        <td mat-cell *matCellDef="let r" class="actions-col">
+          <div class="actions">
+            <button mat-button (click)="openEdit(r)">
+              <mat-icon>edit</mat-icon><span class="label">Modifier</span>
+            </button>
+            <button mat-button color="warn" (click)="askDelete(r)">
+              <mat-icon>delete</mat-icon><span class="label">Supprimer</span>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="total()"
+      [pageIndex]="page() - 1"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="[10]"
+      (page)="onPage($event)">
+    </mat-paginator>
+  </div>
+
+  <ng-template #empty>
+    <p class="muted">Aucun rôle.</p>
+  </ng-template>
+
+  <!-- Create -->
+  <ng-template #createTpl>
+    <h2 mat-dialog-title>Créer un Rôle</h2>
+    <form [formGroup]="createForm" mat-dialog-content class="form">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Nom *</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="createForm.controls.name.touched && createForm.controls.name.invalid">
+          Nom requis (min 2)
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Policy ID *</mat-label>
+        <input matInput type="number" formControlName="policy_id" />
+        <mat-error *ngIf="createForm.controls.policy_id.touched && createForm.controls.policy_id.invalid">
+          Policy ID requis
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Annuler</button>
+      <button mat-raised-button color="primary" [disabled]="createForm.invalid" (click)="submitCreate()">
+        Créer
+      </button>
+    </div>
+  </ng-template>
+
+  <!-- Edit -->
+  <ng-template #editTpl>
+    <h2 mat-dialog-title>Modifier « {{ editName() }} »</h2>
+    <form [formGroup]="editForm" mat-dialog-content class="form">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Nom *</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="editForm.controls.name.touched && editForm.controls.name.invalid">
+          Nom requis (min 2)
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Policy ID *</mat-label>
+        <input matInput type="number" formControlName="policy_id" />
+        <mat-error *ngIf="editForm.controls.policy_id.touched && editForm.controls.policy_id.invalid">
+          Policy ID requis
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Annuler</button>
+      <button mat-raised-button color="primary" [disabled]="editForm.invalid" (click)="submitEdit()">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</section>

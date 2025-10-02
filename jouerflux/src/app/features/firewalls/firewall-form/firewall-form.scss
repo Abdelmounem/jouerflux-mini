@@ -1,0 +1,13 @@
+.form {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 480px;
+}
+
+.actions {
+  margin-top: 0.5rem;
+}
+
+.error {
+  color: #b91c1c;
+}

@@ -1,9 +1,6 @@
-FROM debian:bullseye-slim
-
+FROM --platform=linux/arm64/v8 debian:bookworm-slim
 WORKDIR /app
-
-COPY run /app/run
-
+# on copie le binaire tel quel et on lui donne les droits d'exécution
+COPY --chmod=755 run /app/run
 EXPOSE 5000
-
-CMD ["./run"]
+CMD ["/app/run"]

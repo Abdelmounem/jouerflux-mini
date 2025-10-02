@@ -1,0 +1,35 @@
+.backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.4);
+  display: grid; place-items: center;
+  z-index: 1000;
+}
+
+.dialog {
+  width: min(92vw, 420px);
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem 1rem 0.75rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+h3 { margin: 0 0 .5rem; }
+
+.actions {
+  display: flex; gap: .5rem; justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.btn {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  padding: .45rem .8rem;
+  border-radius: .6rem;
+  cursor: pointer;
+}
+.btn:hover { background: #f1f5f9; }
+.btn-warn {
+  border-color: #fca5a5;
+  background: #fee2e2;
+}
+.btn-warn:hover { background: #fecaca; }

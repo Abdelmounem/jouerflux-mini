@@ -1,0 +1,15 @@
+<section class="container">
+  <a [routerLink]="['/firewalls']">← Retour</a>
+
+  @if (loading()) { <div>Chargement…</div> }
+  @if (error())   { <div class="error">{{ error() }}</div> }
+
+  @let f = fw();
+  @if (f) {
+    <article>
+      <h2>#{{ f.id }} — {{ f.name }}</h2>
+      
+      <p><a [routerLink]="['/firewalls', f.id, 'edit']">Modifier</a></p>
+    </article>
+  }
+</section>
